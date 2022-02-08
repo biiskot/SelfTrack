@@ -31,8 +31,7 @@ class EarningWallet extends React.Component {
   render() {
     return (
       <div id="earning">
-        <h2>Solde: {0}</h2>
-        <DisplayWallet type="earn" tab={this.tabTokensEarnings} />
+        <DisplayWallet type="earn" tab={this.props.tab} />
       </div>
     );
   }

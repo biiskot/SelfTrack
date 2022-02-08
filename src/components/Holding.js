@@ -3,17 +3,17 @@ import MainWallet from "./Main";
 import EarningWallet from "./Earning";
 import TradingWallet from "./Trading";
 import DisplayWallet from "./DisplayWallet";
+import App from "../App";
 
 class HoldingWallet extends React.Component {
-  constructor() {
-    super();
-   // this.props.solde = 0;
-    //this.props.PnL = 0;
-  //  this.props.tabTokens = [];
+  constructor(props) {
+    super(props);
+
   }
 
   componentDidMount(){
-    return <accessAPI/>
+    console.log('holding monté');
+  
   }
 
   addToken(tkn, qtty, chain) {
@@ -42,8 +42,7 @@ class HoldingWallet extends React.Component {
   render() {
     return (
       <div id="holding">
-        <h2>Solde: {0}</h2>
-        <DisplayWallet type="hold" tab={this.tabTokens} />
+        <DisplayWallet type="hold" tab={this.props.tab} />
       </div>
     );
   }

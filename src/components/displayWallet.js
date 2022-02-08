@@ -9,23 +9,17 @@ import CalculSolde from "./CalculSolde";
 //Component return div liste elements tab
 function DisplayWallet(props) {
   let usedtab = props.tab;
-  let tmp=[];
   let i=0;
 
-      console.log(props.type);
-      i=0;
-      let listTokens = usedtab.map((asset)=>{
+  let tmp=[];
 
+      console.log(props.type);
+      
+      usedtab.map((asset)=>{
+ 
         switch (props.type) {
-          case "main" || "hold":
-            tmp[i] = 
-            <li key={asset.tokenname}>
-              token :{asset.tokenname}, qtty :{asset.quantity}, value :
-              {asset.value}
-            </li>;
-            i++;
-            break;
-          case "earn":
+          case "hold":
+          case "main" :
             tmp[i] = 
           <li key={asset.tokenname}>
             token :{asset.tokenname}, qtty :{asset.quantity}, value :
@@ -33,13 +27,22 @@ function DisplayWallet(props) {
           </li>;
             i++;
             break;
+          
+          case "earn":
+          tmp[i] = 
+            <li key={asset.tokenname}>
+              token :{asset.tokenname}, qtty :{asset.quantity}, value :
+              {asset.value}, daily reward : {asset.earnedValueDaily}, apr : {asset.apr}
+            </li>;
+            i++;
+            break;
           case "trade":
             tmp[i] = 
-            <li>
-              token :{asset.token}, qtty :{asset.quantity}, value :
-              {asset.value}, entryprice :{asset.entryPrice}
-              {asset.entryPrice}, perfo : {asset.perf}
-            </li>
+          <li>
+            token :{asset.token}, qtty :{asset.quantity}, value :
+            {asset.value}, entryprice :{asset.entryPrice}
+            {asset.entryPrice}, perfo : {asset.perf}
+          </li>
               i++;
               break;
       }
@@ -47,9 +50,8 @@ function DisplayWallet(props) {
      );
      console.log(tmp);
       return (
-        <ul id='listtokens'>{tmp}</ul>
+        <ul id={'list_token_'+props.type}>{tmp}</ul>
       );
-    
   }
 
 export default DisplayWallet;

@@ -34,7 +34,7 @@ class MainWallet extends React.Component {
     return (
       <div id="mainwallet">
         <p>balise p</p>
-        <CalculSolde tab={this.props.tab} solde={this.solde} />
+        <CalculSolde tab={this.props.tab} />
         <DisplayWallet tab={this.props.tab} type="main"/>
       </div>
     );
