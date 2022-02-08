@@ -9,9 +9,9 @@ import App from "../App";
 function CalculSolde(props) {
   let tmp = 0;
   let usedtab = props.tab;
-  let listTokens = usedtab.map((x) => {
+  usedtab.map((x) => {
     tmp+= x.value});
-    console.log(listTokens);
+    console.log();
   return (<p> Solde : {tmp}</p>)
 }
 

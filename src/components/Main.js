@@ -6,7 +6,7 @@ import TradingWallet from "./Trading";
 import CalculSolde from "./CalculSolde";
 import DisplayWallet from "./DisplayWallet";
 
-let tab = [{tokenname:'ether',value:3300,quantity:1},{tokenname:'btc',value:40000,quantity:1}];
+
 
 //Objet wallet (1 principale et 3 détaillés)
 class MainWallet extends React.Component {
@@ -20,21 +20,22 @@ class MainWallet extends React.Component {
     this.PnL = 0;
     this.tabTokens = [{value: 3000,token:'ether',quantity:1}];
     this.state = {show:0};
+   
   }
 
   componentDidMount(){
     console.log('main monté');
-    this.setState({show: 1});
+ //   this.setState({show: 1}); // appelle render()
     console.log(this.state); // probleme synchro
     //mise a jour du solde ttes les secondes
-
+ 
   }
-  render() {
+  render() { 
     return (
       <div id="mainwallet">
         <p>balise p</p>
-        <CalculSolde tab={tab} solde={this.solde} />
-        <DisplayWallet tab={tab} type='main'/>
+        <CalculSolde tab={this.props.tab} solde={this.solde} />
+        <DisplayWallet tab={this.props.tab} type="main"/>
       </div>
     );
   }
