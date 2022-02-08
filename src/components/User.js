@@ -5,11 +5,9 @@ import HoldingWallet from "./Holding";
 import TradingWallet from "./Trading";
 
 class User extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.pseudo = props.pseudo;
-    this.uid = props.uid;
+  constructor(){
+    this.pseudo = this.props.pseudo;
+    this.uid = this.props.uid;
     //Components :
     this.mainwallet = <MainWallet />;
     this.holdwallet = <HoldingWallet />;

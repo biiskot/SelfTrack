@@ -1,7 +1,9 @@
 import React from "react";
+import App from "../App";
 import MainWallet from "./Main";
 import HoldingWallet from "./Holding";
 import TradingWallet from "./Trading";
+import DisplayWallet from "./DisplayWallet";
 
 class EarningWallet extends React.Component {
   addTokenAPR(tkn, qtty, apr) {
@@ -17,20 +19,20 @@ class EarningWallet extends React.Component {
     this.tabTokens.push(tkn, qtty); //Résumé actifs calculSoldes()
   }
   transferHoldEarn(tkn, qtty, apr, rewrd_tkn) {
-    Holding.removeToken(tkn, qtty); //On retire les fonds mis en earning du wallet holding
-    this.addToken();
+  //  Holding.removeToken(tkn, qtty); //On retire les fonds mis en earning du wallet holding
+//    this.addToken();
     //On ajoute l'objet Earning au tableau du wallet
-    this.addTokenAPR();
+ //   this.addTokenAPR();
   }
   transferEarnHold(tkn, qtty) {
-    this.removeToken(tkn, qtty);
-    User.mainwallet.addToken(tkn, qtty);
+   // this.removeToken(tkn, qtty);
+   // User.mainwallet.addToken(tkn, qtty);
   }
   render() {
     return (
       <div id="earning">
-        <h2>Solde: {MyUser.mainwallet.solde}</h2>
-        <displayWallet type="earn" tab={this.tabTokensEarnings} />
+        <h2>Solde: {0}</h2>
+        <DisplayWallet type="earn" tab={this.tabTokensEarnings} />
       </div>
     );
   }
