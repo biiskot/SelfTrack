@@ -1,8 +1,6 @@
 import React from "react";
-import MainWallet from "./Main";
-import EarningWallet from "./Earning";
-import HoldingWallet from "./Holding";
 import DisplayWallet from "./DisplayWallet";
+import CalculSolde from "./CalculSolde";
 
 class TradingWallet extends React.Component {
   constructor(props) {
@@ -15,7 +13,7 @@ class TradingWallet extends React.Component {
       quantity: qtty,
       entryPrice: entry,
       value: qtty * tkn.price,
-      perf: ((tkn.price * qtty) / entry) * qtty * 100
+      perf: (((tkn.price * qtty) / entry) * 100)+'% ,'+'PnL : '
     };
     this.tabTokensTrading.push(tradeStruct); //Tab to display
     this.tabTokens.push(tkn, qtty);
@@ -31,8 +29,8 @@ class TradingWallet extends React.Component {
   render() {
     return (
       <div id="trading">
-        <h2>Solde: {}</h2>
-        <DisplayWallet type="trade" tab={this.tabTokensTrading} />
+        <CalculSolde tab={this.props.tab} />
+        <DisplayWallet type="trade" tab={this.props.tab} />
       </div>
     );
   }

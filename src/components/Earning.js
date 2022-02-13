@@ -1,9 +1,7 @@
 import React from "react";
 import App from "../App";
-import MainWallet from "./Main";
-import HoldingWallet from "./Holding";
-import TradingWallet from "./Trading";
 import DisplayWallet from "./DisplayWallet";
+import CalculSolde from "./CalculSolde";
 
 class EarningWallet extends React.Component {
   addTokenAPR(tkn, qtty, apr) {
@@ -31,6 +29,8 @@ class EarningWallet extends React.Component {
   render() {
     return (
       <div id="earning">
+
+        <CalculSolde tab={this.props.tab} />
         <DisplayWallet type="earn" tab={this.props.tab} />
       </div>
     );

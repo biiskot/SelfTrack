@@ -21,7 +21,7 @@ function DisplayWallet(props) {
           case "hold":
           case "main" :
             tmp[i] = 
-          <li key={asset.tokenname}>
+          <li key={'hold_'+asset.tokenname}>
             token :{asset.tokenname}, qtty :{asset.quantity}, value :
             {asset.value}
           </li>;
@@ -30,7 +30,7 @@ function DisplayWallet(props) {
           
           case "earn":
           tmp[i] = 
-            <li key={asset.tokenname}>
+            <li key={'earn_'+asset.tokenname}>
               token :{asset.tokenname}, qtty :{asset.quantity}, value :
               {asset.value}, daily reward : {asset.earnedValueDaily}, apr : {asset.apr}
             </li>;
@@ -38,17 +38,15 @@ function DisplayWallet(props) {
             break;
           case "trade":
             tmp[i] = 
-          <li>
+          <li key={'trade_'+asset.tokenname}>
             token :{asset.token}, qtty :{asset.quantity}, value :
-            {asset.value}, entryprice :{asset.entryPrice}
-            {asset.entryPrice}, perfo : {asset.perf}
+            {asset.value}, entryprice :{asset.entryPrice}, perfo : {asset.perf}
           </li>
               i++;
               break;
       }
     }
      );
-     console.log(tmp);
       return (
         <ul id={'list_token_'+props.type}>{tmp}</ul>
       );
