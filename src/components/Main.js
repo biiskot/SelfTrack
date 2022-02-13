@@ -1,6 +1,5 @@
 import React from "react";
 import App from "../App";
-import CalculSolde from "./CalculSolde";
 import DisplayWallet from "./DisplayWallet";
 
 
@@ -30,7 +29,6 @@ class MainWallet extends React.Component {
   render() { 
     return (
       <div id="mainwallet">
-        <CalculSolde tab={this.props.tab} />
         <DisplayWallet tab={this.props.tab} type="main"/>
       </div>
     );

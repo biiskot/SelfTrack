@@ -1,6 +1,5 @@
 import React from "react";
 import DisplayWallet from "./DisplayWallet";
-import CalculSolde from "./CalculSolde";
 
 class TradingWallet extends React.Component {
   constructor(props) {
@@ -29,7 +28,6 @@ class TradingWallet extends React.Component {
   render() {
     return (
       <div id="trading">
-        <CalculSolde tab={this.props.tab} />
         <DisplayWallet type="trade" tab={this.props.tab} />
       </div>
     );

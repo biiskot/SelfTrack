@@ -3,12 +3,6 @@ import './App.css';
 
 import User from "./components/User";
 import React from "react";
-import MainWallet from './components/Main';
-import HoldingWallet from './components/Holding';
-import EarningWallet from './components/Earning';
-import TradingWallet from './components/Trading';
-import ManageTokensWindow from './components/ManageTokensWindow';
-
 
 
 class App extends React.Component {

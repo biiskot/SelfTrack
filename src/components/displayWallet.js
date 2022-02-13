@@ -1,25 +1,18 @@
 import React from "react";
-import MainWallet from "./Main";
-import EarningWallet from "./Earning";
-import HoldingWallet from "./Holding";
-import TradingWallet from "./Trading";
-import App from "../App";
-import CalculSolde from "./CalculSolde";
 
 //Component return div liste elements tab
 function DisplayWallet(props) {
-  let usedtab = props.tab;
   let i=0;
-
+  let tmpsolde=0;
   let tmp=[];
 
       console.log(props.type);
       
-      usedtab.map((asset)=>{
- 
+      props.tab.map((asset)=>{
+        tmpsolde += asset.value;
         switch (props.type) {
           case "hold":
-          case "main" :
+          case "main":
             tmp[i] = 
           <li key={'hold_'+asset.tokenname}>
             token :{asset.tokenname}, qtty :{asset.quantity}, value :
@@ -48,7 +41,10 @@ function DisplayWallet(props) {
     }
      );
       return (
-        <ul id={'list_token_'+props.type}>{tmp}</ul>
+        <div id='display'>
+          <h2>Solde : {tmpsolde}</h2>
+          <ul id={'list_token_'+props.type}>{tmp}</ul>
+        </div>
       );
   }
 

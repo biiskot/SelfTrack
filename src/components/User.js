@@ -31,30 +31,58 @@ class User extends React.Component {
     //this.setState(isLoggedIN:true)  modifier l'etat
   }
 
-  updateWallet(asset){
-    console.log(this.state.tabhold);
-    
-    this.setState({
-      tabhold : this.state.tabhold.push(asset)
-    });
-    console.log('apres : ')
-    console.log(this.state.tabhold);
-  }
-
-
 
   render() {
     return(
     <div id='display_wallets'>
       {this.state.showPopup ? 
-          <Popup onClick={(assetToAdd) =>this.updateWallet(assetToAdd)}
+          <Popup onSubmit={(assetToAdd,wallet) =>{
+            let tmp=0;
+            
+            // ^ Onclick appelé dans le return de <Popup> pour modifier les state tab
+
+            console.log(this.state.tabhold);
+            console.log(assetToAdd);
+            console.log(wallet);
+            //On push/pop l'asset dans le bon wallet :
+            switch (wallet){
+              case 'hold': 
+                tmp = this.state.tabhold;
+                tmp.push(assetToAdd);
+                this.setState(
+                  {
+                    tabhold : tmp
+                });
+              break;
+              case 'earn':
+                tmp = this.state.tabearn;
+                tmp.push(assetToAdd);
+                this.setState(
+                  {
+                    tabearn : tmp
+                });
+              break;
+              case 'trade':
+                tmp = this.state.tabtrade;
+                tmp.push(assetToAdd);
+                this.setState(
+                  {
+                    tabtrade : tmp
+                });
+                break;
+          }
+          console.log('apres : ')
+          console.log(this.state.tabhold);}}
             text='Manage your assets'
             closePopup={this.togglePopup.bind(this)}
           />
           : null
         }
+      
+      {/*Bouton pour faire apparaitre la popup pour modifier ses wallets : */}
       <button onClick={this.togglePopup.bind(this)}>MANAGE</button>
 
+      {/*On crée 3 components : */}
       <HoldingWallet tab={this.state.tabhold}/>
       <EarningWallet tab={this.state.tabearn}/>
       <TradingWallet tab={this.state.tabtrade}/>

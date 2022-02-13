@@ -2,29 +2,43 @@ import React from "react";
 
 class Popup extends React.Component{
     render() {
+    let wallet_to_update='';
       return (
         <div className='popup'>
           <div className='popup_inner'>
             <h1>{this.props.text}</h1>
 
             <div id='managewindow'>
-              <form method="post">
-                <label>Nom :</label>
-                <select>
-                    <option defaultValue="">Holding</option>
-                    <option value="">Earning</option>
-                    <option value="">Trading</option>
-                </select>
-                <button onClick={
-                    ()=>{
+              <form onSubmit={(event)=>{
+                  event.preventDefault();
                         let asset = {
                             tokenname:'tokenname',
                             value:100,
                             quantity:1
                         }
-                            this.props.onClick(asset)
+                            this.props.closePopup();
+                            //On appelle onSubmit de <User> avec les paramètres associés
+                  
+                            this.props.onSubmit(asset,wallet_to_update);
                         }
-                }>Enregistrer</button>
+                    }
+                >
+                <label>Nom :</label>
+                <select onChange={ (event) => 
+                {
+                //Récupère la value de l'option selectionnée grâce à la propriété selectedIndex
+                    console.log(event.target[event.target.selectedIndex].value + ' selected')
+                //On inscrit le bon wallet dans une variable qu'on fera remonter dans <User>
+                    wallet_to_update = event.target[event.target.selectedIndex].value;
+                    
+                }
+                    }>
+                    <option value={null}>--Select--</option>
+                    <option value="hold">Holding</option>
+                    <option value="earn">Earning</option>
+                    <option value="trade">Trading</option>
+                </select>
+                <button type="submit" >Enregistrer </button>
                 </form>
             </div>
 

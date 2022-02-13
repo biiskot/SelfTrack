@@ -1,11 +1,11 @@
 import React from "react";
 import DisplayWallet from "./DisplayWallet";
 import App from "../App";
-import CalculSolde from "./CalculSolde";
+
 
 class HoldingWallet extends React.Component {
   constructor(props) {
-    super(props);
+    super();
 
   }
 
@@ -40,7 +40,6 @@ class HoldingWallet extends React.Component {
   render() {
     return (
       <div id="holding">
-        <CalculSolde tab={this.props.tab} />
         <DisplayWallet type="hold" tab={this.props.tab} />
       </div>
     );
