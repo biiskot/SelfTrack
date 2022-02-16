@@ -1,7 +1,18 @@
 import React from "react";
 
+const CoinMarketCap = require('coinmarketcap-api')
+
+const apiKey = '46e87d12-66f5-4c68-9b98-a0749a126d62'
+const client = new CoinMarketCap(apiKey)
+
+client.getTickers().then(console.log).catch(console.error)
+client.getGlobal().then(console.log).catch(console.error)
+
 class Popup extends React.Component{
     render() {
+
+    console.log();
+
     let wallet_to_update='';
       return (
         <div className='popup'>
@@ -30,7 +41,7 @@ class Popup extends React.Component{
                     console.log(event.target[event.target.selectedIndex].value + ' selected')
                 //On inscrit le bon wallet dans une variable qu'on fera remonter dans <User>
                     wallet_to_update = event.target[event.target.selectedIndex].value;
-                    
+                   
                 }
                     }>
                     <option value={null}>--Select--</option>

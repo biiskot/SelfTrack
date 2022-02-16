@@ -14,9 +14,9 @@ class User extends React.Component {
     
     this.state = {
       showPopup: false,
-      tabhold : [{tokenname:'ether',value:3300,quantity:1},{tokenname:'btc',value:40000,quantity:1}],
-      tabearn : [{tokenname:'ether',value:3300,quantity:1,earnedValueDaily: 10,apr:'15%'},{tokenname:'btc',value:40000,quantity:1,earnedValueDaily: 10,apr:'15%'}],
-      tabtrade : [{tokenname:'ether',value:3300,quantity:1,entryPrice:3000,perf:'5%'},{tokenname:'btc',value:40000,quantity:1,entryPrice:30000,perf:'6%'}]
+      tabhold : [{tokenname:'',value:1,quantity:1}],
+      tabearn : [],
+      tabtrade : [{tokenname:'ether',value:3300,quantity:1,entryPrice:3000,perf:'5%'}]
     }
   }
 
@@ -31,48 +31,55 @@ class User extends React.Component {
     //this.setState(isLoggedIN:true)  modifier l'etat
   }
 
+  formSubmitted(assetToAdd,wallet){
+    
+      let tmp=0;
+      
+      // ^ Onclick appelé dans le return de <Popup> pour modifier les state tab
+
+      console.log(this.state.tabhold);
+      console.log(assetToAdd);
+      console.log(wallet);
+      //On push l'asset dans le bon wallet :
+      switch (wallet){
+        case 'hold': 
+          tmp = this.state.tabhold;
+          tmp.push(assetToAdd);
+          this.setState(
+            {
+              tabhold : tmp
+          });
+        break;
+        case 'earn':
+          tmp = this.state.tabearn;
+          tmp.push(assetToAdd);
+          this.setState(
+            {
+              tabearn : tmp
+          });
+        break;
+        case 'trade':
+          tmp = this.state.tabtrade;
+          tmp.push(assetToAdd);
+          this.setState(
+            {
+              tabtrade : tmp
+          });
+          break;
+    }
+    console.log('apres : ')
+    console.log(this.state.tabhold);
+  }
+  
 
   render() {
     return(
     <div id='display_wallets'>
       {this.state.showPopup ? 
-          <Popup onSubmit={(assetToAdd,wallet) =>{
-            let tmp=0;
-            
-            // ^ Onclick appelé dans le return de <Popup> pour modifier les state tab
-
-            console.log(this.state.tabhold);
-            console.log(assetToAdd);
-            console.log(wallet);
-            //On push/pop l'asset dans le bon wallet :
-            switch (wallet){
-              case 'hold': 
-                tmp = this.state.tabhold;
-                tmp.push(assetToAdd);
-                this.setState(
-                  {
-                    tabhold : tmp
-                });
-              break;
-              case 'earn':
-                tmp = this.state.tabearn;
-                tmp.push(assetToAdd);
-                this.setState(
-                  {
-                    tabearn : tmp
-                });
-              break;
-              case 'trade':
-                tmp = this.state.tabtrade;
-                tmp.push(assetToAdd);
-                this.setState(
-                  {
-                    tabtrade : tmp
-                });
-                break;
-          }
-          console.log('apres : ')
-          console.log(this.state.tabhold);}}
+          <Popup onSubmit={(asset,wallet) => {
+            //On listen le submit du form et on appelle la fct avec les paramètres remontés de Popup.js
+            this.formSubmitted(asset,wallet);
+          }}
             text='Manage your assets'
             closePopup={this.togglePopup.bind(this)}
           />

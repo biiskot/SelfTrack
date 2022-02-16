@@ -5,6 +5,7 @@ function DisplayWallet(props) {
   let i=0;
   let tmpsolde=0;
   let tmp=[];
+  let totalearn=0;
 
       console.log(props.type);
       
@@ -22,6 +23,7 @@ function DisplayWallet(props) {
             break;
           
           case "earn":
+          totalearn+=asset.earnedValueDaily;
           tmp[i] = 
             <li key={'earn_'+asset.tokenname}>
               token :{asset.tokenname}, qtty :{asset.quantity}, value :
@@ -40,12 +42,23 @@ function DisplayWallet(props) {
       }
     }
      );
+     if(props.type =='earn'){
       return (
         <div id='display'>
-          <h2>Solde : {tmpsolde}</h2>
+          <h2>Solde : {tmpsolde}$</h2>
+          <h4>Est. gains daily : {totalearn}$</h4>
           <ul id={'list_token_'+props.type}>{tmp}</ul>
         </div>
       );
+     }
+     else{
+      return (
+        <div id='display'>
+          <h2>Solde : {tmpsolde}$</h2>
+          <ul id={'list_token_'+props.type}>{tmp}</ul>
+        </div>
+      );
+     }
   }
 
 export default DisplayWallet;
