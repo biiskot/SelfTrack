@@ -29,7 +29,7 @@ class User extends React.Component {
     }
   }
 
-
+/*
   addToken(tkn, qtty, chain) {
     let holdStruct = {
       quantity: qtty,
@@ -39,7 +39,7 @@ class User extends React.Component {
     };
     this.tabTokens.push(holdStruct); //Tab to display
   }
-  
+
   removeToken(tkn, qtty) {
     //Trouver dans le tab holding le token et enlever la qtté voulue
     for (let i = 0; i < this.tabTokens.length; i++) {
@@ -53,7 +53,7 @@ class User extends React.Component {
       }
     }
   }
-
+*/
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup
