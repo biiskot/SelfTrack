@@ -7,12 +7,8 @@ function DisplayWallet(props) {
   let tmp=[];
   let totalearn=0;
 
-      console.log(props.type);
-
       if(props.tab.length < 1) {
-        console.log('suce');
         return (
-          
           <h4>Click on Manage button to add an asset</h4>
         )
       }
@@ -33,8 +29,8 @@ function DisplayWallet(props) {
               totalearn+=asset.earnedValueDaily;
               tmp[i] = 
                 <li key={'earn_'+asset.tokenname}>
-                  token :{asset.tokenname}, qtty :{asset.quantity}, value :
-                  {asset.value}, daily reward : {asset.earnedValueDaily}, apr : {asset.apr}
+                  {asset.tokenname} {asset.symbol.toUpperCase()} {asset.quantity}, {asset.value} <br/>
+                  1 {asset.tokenname}: {asset.price}, APR : {asset.apr}, Daily Rewards : {asset.earnedValueDaily}
                 </li>;
                 i++;
                 break;
@@ -63,7 +59,7 @@ function DisplayWallet(props) {
           return (
             <div id='display'>
               
-              <h2>Solde : {tmpsolde}$</h2>
+              <h2>Valeur totale trades : {tmpsolde}$</h2>
               <h4>Perf totale : {totalearn}$</h4>
               <ul id={'list_token_'+props.type}>{tmp}</ul>
             </div>
@@ -73,13 +69,12 @@ function DisplayWallet(props) {
           return (
             <div id='display'>
               
-              <h2>Solde : {tmpsolde}$</h2>
+              <h2>Solde :</h2>
               <ul id={'list_token_'+props.type}>{tmp}</ul>
             </div>
           );
         }
       }
-      
   }
 
 export default DisplayWallet;

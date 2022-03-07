@@ -1,14 +1,40 @@
 import React from "react";
-import axios from "axios";
+import DynamicForm from "./DynamicForm"
+//import axios from "axios";
 
 
 class Popup extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      Easset : {},
+      wallet : '',
+      isWallSelect : false
+    }
+  }
+  printDyna(){
+    if(this.state.isWallSelect)  {
+    console.log("good idea");
+   return <DynamicForm wallet={this.state.wallet} fullfilled={(x) => this.addDynamicProps(x)}/>
+  }
+    else  console.log('wallet non select');
+  }
+
+    addDynamicProps(struct){
+      console.log('prop change en live');
+      let tmpasset = this.state.Easset;
+
+      tmpasset.APR = struct.APR;
+      tmpasset.entryPrice = struct.entryPrice;
+      
+      this.setState({tmpasset});
+    }
+
     render() {
 
-    console.log();
-
-    let wallet_to_update='';   
-    let asset ={};
+    let wallet_to_update = this.state.wallet;   
+    let asset = this.state.Easset;
+   
 
       return (
         
@@ -19,20 +45,20 @@ class Popup extends React.Component{
             <div id='managewindow'>
               <form onSubmit={(event)=>{
                   event.preventDefault();
-                            
-                            //On appelle onSubmit de <User> avec les paramètres associés
+                  console.log(asset);
 
                             //On check si l'ajout est corda : 
-                            if(asset!= null && asset.quantity > 0 && wallet_to_update!=null){
+                            if( asset.quantity > 0 && typeof wallet_to_update === 'string'){
                               this.props.closePopup();
+                              console.log(wallet_to_update);
 
+                              this.setState({asset});
                               //On fait remonter asset{} et le wallet dans la fonction onSubmit de User.js
-                              this.props.onSubmit(asset,wallet_to_update);
+                              this.props.onSubmit(this.state.Easset,this.state.wallet);
                               
                             }
                             else{
                               alert('Saisie invalide, select again the coin');
-                             
                             }
                         }
                     }
@@ -44,8 +70,8 @@ class Popup extends React.Component{
                         console.log(event.target[event.target.selectedIndex].value + ' selected')
                     //On inscrit le bon wallet dans une variable qu'on fera remonter dans <User>
                         wallet_to_update = event.target[event.target.selectedIndex].value;
-                    
-                    
+                        this.setState({wallet : wallet_to_update});
+                        this.setState({isWallSelect: true});
                     }
                   }>
                     <option value={null}>--Select--</option>
@@ -53,42 +79,19 @@ class Popup extends React.Component{
                     <option value="earn">Earning</option>
                     <option value="trade">Trading</option>
                 </select>
+
                 <label>Token :</label>
                 <select onChange={(event)=>{
-                  let tmp = JSON.parse(event.target[event.target.selectedIndex].value)
-                  console.log(tmp);
+                  let tmpcoin = JSON.parse(event.target[event.target.selectedIndex].value)
+                  console.log(tmpcoin);
                   //Ajout d'inputs du form en fonction du wallet (apr,perf...) : 
-                  switch(wallet_to_update){
-                    case 'hold':
-                    //On attribue a la struct asset les props du token sélectionné
-                      asset = {
-                        tokenname: tmp.id,
-                        symbol: tmp.symbol,
-                        value: tmp.current_price,
-                        quantity: 1
-                      }
-                      break;
-                    case 'trade':
-                      asset = {
-                        tokenname: tmp.id,
-                        symbol: tmp.symbol,
-                        value: tmp.current_price,
-                        quantity: 1
-                      }
-                      break;
-                    case 'earn':
-                      asset = {
-                        tokenname: tmp.id,
-                        symbol: tmp.symbol,
-                        value: tmp.current_price,
-                        quantity: 1
-                      }
-                      break;
-                    default:
-                      alert('Choisissez un wallet');
-                      asset=null;
-                  }
-                  console.log(asset);
+
+                  //On attribue a la struct asset les props fournies par l'API du token sélectionné   
+                  asset.tokenname = tmpcoin.name;
+                  asset.symbol = tmpcoin.symbol;
+                  asset.price = tmpcoin.current_price;   
+                  asset.image = tmpcoin.image;
+                  //props api interessantes : highest/lowest 24H, price_change/change_pourcent
                 }
                 }>
                   <option value={null}>--Select--</option>
@@ -101,7 +104,19 @@ class Popup extends React.Component{
                   
                 }
                 </select>
-                <button type="submit">Enregistrer </button>
+                
+                <label>Quantity : </label>
+                <input type="number" step="0.00001" placeholder="0" onChange={(event) => {
+                    console.log(event.target.value);
+                    asset.quantity = event.target.value;
+                    asset.value = Math.round(asset.price * asset.quantity).toFixed(2);
+                    
+                   }
+                  }/>          
+
+                 {this.printDyna()}
+
+                <button type="submit" >Enregistrer </button>
                 </form>
             </div>
 

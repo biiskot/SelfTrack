@@ -2,7 +2,7 @@ import React from "react";
 import DisplayWallet from "./DisplayWallet";
 import Popup from "./Popup";
 
-//Using Axios for hhtps requests API
+//Using Axios for https requests API
 import axios from "axios";
 
 let numberFetchCoin = 100;
@@ -76,15 +76,13 @@ class User extends React.Component {
     componentDidUpdate(){
       console.log('<user> update');
     }
-  formSubmitted(assetToAdd,wallet){
+    
+    formSubmitted(assetToAdd,wallet){
     
       let tmp=0;
       
       // ^ Onclick appelé dans le return de <Popup> pour modifier les state tab
 
-      console.log(this.state.tabhold);
-      console.log(assetToAdd);
-      console.log(wallet);
       //On push l'asset dans le bon wallet, setState :
       switch (wallet){
         case 'hold': 
@@ -111,9 +109,11 @@ class User extends React.Component {
               tabtrade : tmp
           });
           break;
+          default : 
+            console.log('pas de wallet select');
     }
-    console.log('apres : ')
-    console.log(this.state.tabhold);
+    console.log('ajout effectué, tableau now : ')
+    console.log(this.state);
   }
   
 
@@ -121,6 +121,7 @@ class User extends React.Component {
  
     return(
     <div id='display_wallets'>
+
       {this.state.showPopup ? 
           <Popup onSubmit={(asset,wallet) => {
             //On listen le submit du form et on appelle la fct avec les paramètres remontés de Popup.js
@@ -138,15 +139,15 @@ class User extends React.Component {
 
       {/*On crée 3 components : */}
       <div id='holdWallet'>
-        <h2>HOLD</h2>
-         <DisplayWallet type="trade" tab={this.state.tabhold} />
+        <h2>H</h2>
+         <DisplayWallet type="hold" tab={this.state.tabhold} />
       </div>
       <div id='earnWallet'>
-        <h2>EARN</h2>
-         <DisplayWallet type="trade" tab={this.state.tabearn} />
+        <h2>E</h2>
+         <DisplayWallet type="earn" tab={this.state.tabearn} />
       </div>
       <div id='tradeWallet'>
-          <h2>TRADE</h2>
+          <h2>T</h2>
          <DisplayWallet type="trade" tab={this.state.tabtrade} />
       </div>
     </div>
