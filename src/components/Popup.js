@@ -5,37 +5,36 @@ import DynamicForm from "./DynamicForm"
 
 class Popup extends React.Component{
   constructor(){
-    super()
+    super();
     this.state = {
       Easset : {},
       wallet : '',
       isWallSelect : false
     }
   }
-  printDyna(){
+
+  printDyna(assetStruct){
     if(this.state.isWallSelect)  {
-    console.log("good idea");
-   return <DynamicForm wallet={this.state.wallet} fullfilled={(x) => this.addDynamicProps(x)}/>
-  }
-    else  console.log('wallet non select');
-  }
+      console.log("good idea",assetStruct);
 
-    addDynamicProps(struct){
-      console.log('prop change en live');
-      let tmpasset = this.state.Easset;
+      return <DynamicForm wallet={this.state.wallet} fullfilled={(x,wal) => {
+        let stateAsset = this.state.Easset;
+        console.log(x);
+        if(wal==='earn') stateAsset.APR = x;
+        else if(wal==='trade') stateAsset.entryPrice = x;
 
-      tmpasset.APR = struct.APR;
-      tmpasset.entryPrice = struct.entryPrice;
-      
-      this.setState({tmpasset});
+        this.setState({stateAsset});
+      }}/>
     }
+    else  console.log('no wallet select');
+  }
+
 
     render() {
 
     let wallet_to_update = this.state.wallet;   
     let asset = this.state.Easset;
-   
-
+    
       return (
         
         <div className='popup'>
@@ -51,6 +50,7 @@ class Popup extends React.Component{
                             if( asset.quantity > 0 && typeof wallet_to_update === 'string'){
                               this.props.closePopup();
                               console.log(wallet_to_update);
+
 
                               this.setState({asset});
                               //On fait remonter asset{} et le wallet dans la fonction onSubmit de User.js
@@ -109,12 +109,12 @@ class Popup extends React.Component{
                 <input type="number" step="0.00001" placeholder="0" onChange={(event) => {
                     console.log(event.target.value);
                     asset.quantity = event.target.value;
-                    asset.value = Math.round(asset.price * asset.quantity).toFixed(2);
+                    asset.value = (asset.price * asset.quantity).toFixed(2);
                     
                    }
                   }/>          
 
-                 {this.printDyna()}
+                 {this.printDyna(asset)}
 
                 <button type="submit" >Enregistrer </button>
                 </form>

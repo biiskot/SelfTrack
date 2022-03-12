@@ -26,26 +26,32 @@ function DisplayWallet(props) {
                 break;
               
               case "earn":
-              totalearn+=asset.earnedValueDaily;
-              tmp[i] = 
+                let tmpearneddaily = ((asset.value*(asset.APR/100))/365).toFixed(2);
+                totalearn += tmpearneddaily;
+                tmp[i] = 
                 <li key={'earn_'+asset.tokenname}>
                   {asset.tokenname} {asset.symbol.toUpperCase()} {asset.quantity}, {asset.value} <br/>
-                  1 {asset.tokenname}: {asset.price}, APR : {asset.apr}, Daily Rewards : {asset.earnedValueDaily}
+                  1 {asset.tokenname}: {asset.price}, APR : {asset.APR}, Daily Rewards : {tmpearneddaily}
                 </li>;
                 i++;
                 break;
+
               case "trade":
                 tmp[i] = 
               <li key={'trade_'+asset.tokenname}>
                 token :{asset.tokenname}, qtty :{asset.quantity}, value :
-                {asset.value}, entryprice :{asset.entryPrice}, perfo : {asset.perf}
+                {asset.value}, <br/>entryprice :{asset.entryPrice}<br/>Performance : {(((asset.price*asset.quantity)-(asset.entryPrice*asset.quantity))/(asset.entryPrice*asset.quantity))*100}%
               </li>
                   i++;
-                  break;
+                break;
+
+              default:
+                break;
           }
+          return null;
         }
         );
-        if(props.type =='earn'){
+        if(props.type ==='earn'){
           return (
             <div id='display'>
               
@@ -55,7 +61,7 @@ function DisplayWallet(props) {
             </div>
           );
         }
-        else if(props.type =='trade'){
+        else if(props.type ==='trade'){
           return (
             <div id='display'>
               
@@ -69,7 +75,7 @@ function DisplayWallet(props) {
           return (
             <div id='display'>
               
-              <h2>Solde :</h2>
+              <h2>Solde : {tmpsolde}$</h2>
               <ul id={'list_token_'+props.type}>{tmp}</ul>
             </div>
           );

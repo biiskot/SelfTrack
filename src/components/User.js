@@ -29,31 +29,6 @@ class User extends React.Component {
     }
   }
 
-/*
-  addToken(tkn, qtty, chain) {
-    let holdStruct = {
-      quantity: qtty,
-      token: tkn,
-      value: qtty * tkn.price,
-      blockchain: chain
-    };
-    this.tabTokens.push(holdStruct); //Tab to display
-  }
-
-  removeToken(tkn, qtty) {
-    //Trouver dans le tab holding le token et enlever la qtté voulue
-    for (let i = 0; i < this.tabTokens.length; i++) {
-      if (tkn.name == this.tabTokens[i].name) {
-        if (qtty >= this.tabTokens[i].quantity) {
-          this.tabTokens[i].pop();
-        }
-        else {
-          this.tabTokens[i].quantity -= qtty; //retirer la bonne quantité
-        }
-      }
-    }
-  }
-*/
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup
@@ -127,7 +102,7 @@ class User extends React.Component {
             //On listen le submit du form et on appelle la fct avec les paramètres remontés de Popup.js
             this.formSubmitted(asset,wallet);
           }}
-            text='Manage your assets'
+            text='Manage'
             closePopup={this.togglePopup.bind(this)}
             availableCryptos = {initList}
           />
