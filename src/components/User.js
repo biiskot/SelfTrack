@@ -25,7 +25,7 @@ class User extends React.Component {
       tabhold : [],
       tabearn : [],
       tabtrade : [],
-      currency: 'usd'
+      currency: '$USD'
     }
   }
 
@@ -91,6 +91,9 @@ class User extends React.Component {
     console.log(this.state);
   }
   
+  updateTokensPrice(){
+    
+  }
 
   render() {
  
@@ -115,15 +118,15 @@ class User extends React.Component {
       {/*On crée 3 components : */}
       <div id='holdWallet'>
         <h2>H</h2>
-         <DisplayWallet type="hold" tab={this.state.tabhold} />
+         <DisplayWallet type="hold" currency={this.state.currency} tab={this.state.tabhold} />
       </div>
       <div id='earnWallet'>
         <h2>E</h2>
-         <DisplayWallet type="earn" tab={this.state.tabearn} />
+         <DisplayWallet type="earn" currency={this.state.currency} tab={this.state.tabearn} />
       </div>
       <div id='tradeWallet'>
           <h2>T</h2>
-         <DisplayWallet type="trade" tab={this.state.tabtrade} />
+         <DisplayWallet type="trade" currency={this.state.currency} tab={this.state.tabtrade} />
       </div>
     </div>
     )

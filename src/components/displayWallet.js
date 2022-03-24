@@ -3,7 +3,7 @@ import React from "react";
 //Component return div liste elements tab
 function DisplayWallet(props) {
   let i=0;
-  let tmpsolde=0;
+  let tmpsolde = 0;
   let tmp=[];
   let totalearn=0;
 
@@ -30,8 +30,8 @@ function DisplayWallet(props) {
                 totalearn += tmpearneddaily;
                 tmp[i] = 
                 <li key={'earn_'+asset.tokenname}>
-                  {asset.tokenname} {asset.symbol.toUpperCase()} {asset.quantity}, {asset.value} <br/>
-                  1 {asset.tokenname}: {asset.price}, APR : {asset.APR}, Daily Rewards : {tmpearneddaily}
+                  {asset.tokenname}<br/>{asset.quantity} {asset.symbol.toUpperCase()} | {asset.value}{props.currency} <br/>
+                  1 {asset.symbol.toUpperCase()} = {asset.price}$<br/>APR : {asset.APR}% , Daily Rewards : {tmpearneddaily}$
                 </li>;
                 i++;
                 break;
