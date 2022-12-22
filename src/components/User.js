@@ -1,6 +1,8 @@
 import React from "react";
+import Login from "./Login";
 import DisplayWallet from "./DisplayWallet";
 import Popup from "./Popup";
+import { Link } from "react-router-dom";
 
 //Using Axios for https requests API
 import axios from "axios";
@@ -21,12 +23,20 @@ class User extends React.Component {
   
     
     this.state = {
-      showPopup: false,
+      isLoggedIn : true,
+      showPopup : false,
       tabhold : [],
       tabearn : [],
       tabtrade : [],
       currency: '$USD'
     }
+  }
+
+
+  logout(){
+    this.setState({
+      isLoggedIn : false
+    })
   }
 
   togglePopup() {
@@ -36,7 +46,6 @@ class User extends React.Component {
   }
 
   componentDidMount(){
-    
     console.log('U.I mounted');
     //On ping l'API CoinGecko une fois que l'user interface a été monté :
     axios.get("https://api.coingecko.com/api/v3/ping").then(
@@ -49,14 +58,13 @@ class User extends React.Component {
   }
 
     componentDidUpdate(){
-      console.log('<user> update');
+      console.log('component <user> updated :)');
     }
     
     formSubmitted(assetToAdd,wallet){
-    
-      let tmp=0;
-      
       // ^ Onclick appelé dans le return de <Popup> pour modifier les state tab
+
+      let tmp=0;
 
       //On push l'asset dans le bon wallet, setState :
       switch (wallet){
@@ -96,40 +104,52 @@ class User extends React.Component {
   }
 
   render() {
- 
-    return(
-    <div id='display_wallets'>
+    if(this.state.isLoggedIn){
+      return(
+        <div id='display_wallets'>
+        <button onClick={this.logout}>Se déconnecter</button>
+          {this.state.showPopup ? 
+              <Popup onSubmit={(asset,wallet) => {
+                //On listen le submit du form et on appelle la fct avec les paramètres remontés de Popup.js
+                this.formSubmitted(asset,wallet);
+              }}
+                text='Manage'
+                closePopup={this.togglePopup.bind(this)}
+                availableCryptos = {initList}
+              />
+              : null
+            }
+          
+          {/*Bouton pour faire apparaitre la popup pour modifier ses wallets : */}
+          <button onClick={this.togglePopup.bind(this)}>MANAGE</button>
+    
+          {/*On crée 3 components : */}
+          <div id='holdWallet'>
+            <h2>H</h2>
+             <DisplayWallet type="hold" currency={this.state.currency} tab={this.state.tabhold} />
+          </div>
+          <div id='earnWallet'>
+            <h2>E</h2>
+             <DisplayWallet type="earn" currency={this.state.currency} tab={this.state.tabearn} />
+          </div>
+          <div id='tradeWallet'>
+              <h2>T</h2>
+             <DisplayWallet type="trade" currency={this.state.currency} tab={this.state.tabtrade} />
+          </div>
+        </div>
+        )
+    }
 
-      {this.state.showPopup ? 
-          <Popup onSubmit={(asset,wallet) => {
-            //On listen le submit du form et on appelle la fct avec les paramètres remontés de Popup.js
-            this.formSubmitted(asset,wallet);
-          }}
-            text='Manage'
-            closePopup={this.togglePopup.bind(this)}
-            availableCryptos = {initList}
-          />
-          : null
-        }
-      
-      {/*Bouton pour faire apparaitre la popup pour modifier ses wallets : */}
-      <button onClick={this.togglePopup.bind(this)}>MANAGE</button>
+    else {
+      return(
+        <div>
+          <p>Page pas connecté </p>
+          <Link to="/login">Se connecter</Link>
+          <Link to="/inscription">S'inscrire</Link>
+        </div>
+      )
+    }
 
-      {/*On crée 3 components : */}
-      <div id='holdWallet'>
-        <h2>H</h2>
-         <DisplayWallet type="hold" currency={this.state.currency} tab={this.state.tabhold} />
-      </div>
-      <div id='earnWallet'>
-        <h2>E</h2>
-         <DisplayWallet type="earn" currency={this.state.currency} tab={this.state.tabearn} />
-      </div>
-      <div id='tradeWallet'>
-          <h2>T</h2>
-         <DisplayWallet type="trade" currency={this.state.currency} tab={this.state.tabtrade} />
-      </div>
-    </div>
-    )
   }
 }
 

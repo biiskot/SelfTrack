@@ -12,7 +12,7 @@ class MainWallet extends React.Component {
    /* this.tabTokens = Holding.tabTokens
       .concat(MyUser.earnwallet.tabTokens)
       .concat(Trading.tabTokens); */
-      this.solde = 0;
+    this.solde = 0;
     this.PnL = 0;
     this.tabTokens = [{value: 3000,token:'ether',quantity:1}];
     this.state = {show:0};
