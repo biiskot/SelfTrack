@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import User from './User';
 
+const withRouter = WrappedComponent => props => {
+  const location = useLocation();
+  // other hooks
+
+  return (
+    <User location = {location}/>
+  );
+};
 
 function Login(props){
-  const [username, setUsername] = useState('');
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("submit");
     //bool datamatchdb check si credentials valides
     let datamatchDB = true;
     if(datamatchDB){
-        this.props.boolLogged = true;
-     //   <App/>
+      //Si user connu on authorise la connexion et on passe le tmp isLoggedIn en true pour pouvir le commmuniquer ensuite à <User/>
+      console.log("submit");
+      navigate('/',{data:{islogged:true,email:email}});
     }
   };
 
@@ -22,11 +34,11 @@ function Login(props){
             <h2>Connexion</h2>
             <form onSubmit={handleSubmit}>
             <label>
-                Username:
+                Email:
                 <input
                 type="text"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 />
             </label>
             <br />

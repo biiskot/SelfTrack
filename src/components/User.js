@@ -1,8 +1,8 @@
 import React from "react";
-import Login from "./Login";
 import DisplayWallet from "./DisplayWallet";
 import Popup from "./Popup";
 import { Link } from "react-router-dom";
+import {useLocation} from 'react-router-dom';
 
 //Using Axios for https requests API
 import axios from "axios";
@@ -14,14 +14,14 @@ axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=
     initList = resp.data;
     console.log(initList);
   })
-
+  
 class User extends React.Component {
+ 
   constructor(props){
+    
     super(props);
     this.pseudo = this.props.pseudo;
     this.uid = this.props.uid;
-  
-    
     this.state = {
       isLoggedIn : true,
       showPopup : false,
@@ -30,8 +30,15 @@ class User extends React.Component {
       tabtrade : [],
       currency: '$USD'
     }
+
+    if(this.props.logged){
+      console.log("paname")
+    }
   }
 
+    setLoggedTrue(param){
+       this.setState({isLoggedIn : true});
+    }
 
   logout(){
     this.setState({
@@ -105,6 +112,7 @@ class User extends React.Component {
 
   render() {
     if(this.state.isLoggedIn){
+      console.log("affichage <user> loggedin");
       return(
         <div id='display_wallets'>
         <button onClick={this.logout}>Se déconnecter</button>
@@ -141,6 +149,7 @@ class User extends React.Component {
     }
 
     else {
+      console.log("pas co");
       return(
         <div>
           <p>Page pas connecté </p>
